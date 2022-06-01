@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import BackGround from './backGround.js'
+import ForeGround from './foreGround.js'
 
 function App() {
 
@@ -37,6 +39,8 @@ function App() {
             <p key={index}>{member}</p>
         ))
       )} 
+      {/*<ForeGround /> */}
+      <BackGround />
     </div>
   )
 }
