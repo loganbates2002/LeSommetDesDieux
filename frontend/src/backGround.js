@@ -12,6 +12,10 @@ var bottomOffset = -200;
 
 const Background = () => {
   {/*}
+
+  https://www.youtube.com/watch?v=wVK3HHbli7g // video of background
+
+
   const [axis, setAxis] = useState([{}])
 
 
