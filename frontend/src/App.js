@@ -3,7 +3,7 @@ import BackGround from './backGround.js'
 import ForeGround from './foreGround.js'
 
 function App() {
-
+{/*}
   const [data, setData] = useState([{}])
 
 
@@ -18,20 +18,21 @@ function App() {
     )
   }, []) // pass empty array so it only runs once
 
-  //useEffect(() => {
-  //  fetch("/video_feed").then( //fetching members rout from backend
-  //    res => res.json() // turn into json
-  //  ).then(
-  //    data => {
-  //      setData(data) // set data to res using setData 
-  //      console.log(data)
-  //    }
-  //  )
-  //}, []) // pass empty array so it only runs once
-
+  useEffect(() => {
+    fetch("/video_feed").then( //fetching members rout from backend
+      res => res.json() // turn into json
+    ).then(
+      data => {
+        setData(data) // set data to res using setData 
+        console.log(data)
+      }
+    )
+  }, []) // pass empty array so it only runs once
+/*}*/}
 
   return (
     <div>
+      {/*}
       {(typeof data.members === 'undefined') ? ( // if data.members is undefined then show loading message 
           <h1>Loading...</h1> 
         ) : (

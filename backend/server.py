@@ -2,13 +2,24 @@ from flask import Flask, render_template, Response
 from camera import VideoCamera
 
 app = Flask(__name__, template_folder='../../frontend/src')
-
-@app.route('/members')
-def members():
-    return {"members": ["Member 1", "Member 2", "Member 3"]}
+#
+#@app.route('/members')
+#def members():
+#    axisGen = VideoCamera().get_axis()
+#    return {"members": [axisGen]}
 
 def index():
     return render_template('index.html')
+  
+def axis(camera):
+    while True:
+        axisGen = camera.get_axis()
+        
+        yield (axisGen)
+
+@app.route('/members')
+def members():
+    return Response(axis(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
   
 def gen(camera):
     while True:

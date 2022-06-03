@@ -1,68 +1,65 @@
-import React, { useState } from "react";
-import {View, Text, Image} from 'react-native'
+import React, { useState, useEffect } from "react";
+import './imageStyle.css'
 import skyBackground from "./images/blueskybackground.png";
 import mountainBackground from "./images/mountainthirdrange.png";
+import mountainMiddle from "./images/mountainMiddle.png";
+import mountainTop from "./images/mountainTop.png";
+
+var topOffset = -200;
+var middleOffset = -200;
+var bottomOffset = -200;
 
 const Background = () => {
+  const [axis, setAxis] = useState([{}])
+
+
+  useEffect(() => {
+    fetch("/members").then( //fetching members rout from backend
+      res => res.json() // turn into json
+    ).then(
+      axis => {
+        setAxis(axis) // set data to res using setData 
+        console.log(axis)
+      }
+    )
+  }, [])
+
 return (
   <div>
-   {/*} <img 
-      src={mountainBackground}
-      alt="Mountain foreground"
-      height="100%"
-      z-index="1"
-    />
-    <img 
-      src={skyBackground}
-      alt="Blue sky background"
-      z-index="-1"
-      height="100%"
-/> */}
-    <View style={styles.container}>
-      <View style = {styles.backgroundContainer}>
-        <Image source = {require('./images/blueskybackground.png')} resizeMode = 'cover' style = {styles.backdrop} />
-      </View>
-      <View style = {styles.overlay}>
-        <Text style = {styles.headline}>It should appear in front of the Background Image</Text>
-        <Image style = {styles.logo} source = {require('./images/mountainthirdrange.png')} />
-      </View>
-    </View>
+    {(typeof axis.members === 'undefined') ? ( // if data.members is undefined then show loading message 
+          <h1>Loading...</h1> 
+        ) : (
+          axis.members.map((member, index) => ( // if data.members is defined then map through data.members and show each member
+            <p key={index}>{member}</p>
+        ))
+      )} 
+    <div className="image-stack">
+      <img 
+        style={{marginLeft: topOffset}}
+        className="image-stack__item--top"
+        src={mountainTop}
+        alt="Mountain Top"
+      />
+      <img 
+        style={{marginLeft: middleOffset}}
+        className="image-stack__item--middle"
+        src={mountainMiddle}
+        alt="Mountain Middle"
+      />
+      <img 
+        style={{marginLeft: bottomOffset}}
+        className="image-stack__item--bottom"
+        src={mountainBackground}
+        alt="Mountain background"
+      />
+      <img 
+        className="image-stack__item--sky"
+        src={skyBackground}
+        alt="Blue sky background"
+      />
+    </div>
   </div>
  );
 };
 
 export default Background;
-
-
-var styles = StyleSheet.create({
-  backgroundContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  overlay: {
-    opacity: 0.5,
-    backgroundColor: '#000000'
-  },
-  logo: {
-    backgroundColor: 'rgba(0,0,0,0)',
-    width: 160,
-    height: 52
-  },
-  backdrop: {
-    flex:1,
-    flexDirection: 'column'
-  },
-  headline: {
-    fontSize: 18,
-    textAlign: 'center',
-    backgroundColor: 'black',
-    color: 'white'
-  }
-});

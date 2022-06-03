@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+p {
+  font-size: 20px;
+  font-family: sans-serif;
+}
+
+.container {
+  padding: 0px 0px;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.image-stack {
+  display: grid;
+  position: relative; 
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.image-stack__item--sky {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.image-stack__item--bottom {
+  grid-row: 1;
+  grid-column: 1 / span 8;
+  z-index: 2; 
+  width: 150vw;
+}
+
+.image-stack__item--middle {
+  grid-row: 1;
+  grid-column: 1 / span 8;
+  z-index: 3; 
+  width: 150vw;
+}
+
+.image-stack__item--top {
+  grid-row: 1;
+  grid-column: 1 / span 8;
+  z-index: 4; 
+  width: 150vw;
+}
+
+img {
+  left: 50%;
+  display: block;
+}

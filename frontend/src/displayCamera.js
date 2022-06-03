@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 const DisplayCamera = () => {
 return (
-  <div>
+  <div style={{textAllign: 'center'}}>
    <img
     src="http://localhost:4999/video_feed"
     alt="Video"
-    height="200"
+    height="250"
    />
   </div>
  );
