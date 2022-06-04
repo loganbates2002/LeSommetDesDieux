@@ -46,6 +46,11 @@ p {
 }
 
 img {
-  left: 50%;
   display: block;
+}
+
+canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
 }

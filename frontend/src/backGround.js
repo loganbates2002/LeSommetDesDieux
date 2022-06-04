@@ -9,6 +9,7 @@ import mountainTop from "./images/mountainTop.png";
 var topOffset = -200;
 var middleOffset = -200;
 var bottomOffset = -200;
+var xAxis = 0;
 
 const Background = () => {
   {/*}
@@ -34,11 +35,27 @@ const Background = () => {
   const imgRef = useRef();
   const canvasRef = useRef();
 
+  const handleImage = async() => {
+    const detections = await faceapi.detectAllFaces(
+      imgRef.current,
+      new faceapi.TinyFaceDetectorOptions())
+      //.withFaceLandmarks()
+      //.withFaceDescriptors();
+
+      console.log(detections)
+      if(detections[0]){
+        xAxis = detections[0]._box._x
+        console.log(xAxis)
+      }
+  }
+
   useEffect(() => {
     const loadModels = () => {
       Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
-      ]).then(console.log("its done")).catch((e) => console.log(e));
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      ])
+      .then(handleImage)
+      .catch((e) => console.log(e));
     };
 
     imgRef.current && loadModels();
@@ -57,8 +74,11 @@ return (
       ref = {imgRef}
       src="http://localhost:4999/video_feed"
       alt="Video"
+      width="540"
       height="250"
+      crossOrigin='anonymous'
     />
+    <canvas ref={canvasRef} width="940" height="250"/>
 
     <div className="image-stack">
       <img 
@@ -84,7 +104,6 @@ return (
         src={skyBackground}
         alt="Blue sky background"
       />
-      <canvas ref={canvasRef} />
     </div>
   </div>
  );

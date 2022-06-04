@@ -27,21 +27,21 @@ class VideoCamera(object):
       #yAxis = y
       #axisArray = [xAxis,yAxis]
       break #exit loop after rendering one face
-    sys.stdout.write(faces)
+    #sys.stdout.write(faces)
     ret, jpeg = cv2.imencode('.jpg', frame)
     return jpeg.tobytes()
 
-  def get_axis(self):
-    success, frame = self.video.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    
-    axisArr = []
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-    for (x,y,w,h) in faces:
-      axisArr = [
-          { 'a': x, 'b': y },
-          { 'a': w, 'b': h }
-      ]
-      break #exit loop after rendering one face
-
-    return jsonify(results = axisArr)
+  #def get_axis(self):
+  #  success, frame = self.video.read()
+  #  gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+  #  
+  #  axisArr = []
+  #  faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+  #  for (x,y,w,h) in faces:
+  #    axisArr = [
+  #        { 'a': x, 'b': y },
+  #        { 'a': w, 'b': h }
+  #    ]
+  #    break #exit loop after rendering one face
+#
+  #  return jsonify(results = axisArr)
