@@ -1,5 +1,9 @@
 import cv2
+from flask import jsonify
+import sys
+import numpy as np
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
 class VideoCamera(object):
   def __init__(self):
     self.video = cv2.VideoCapture(0)
@@ -16,7 +20,8 @@ class VideoCamera(object):
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
       cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),3)
+
       break #exit loop after rendering one face
-    
+
     ret, jpeg = cv2.imencode('.jpg', frame)
     return jpeg.tobytes()
