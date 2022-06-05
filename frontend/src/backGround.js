@@ -12,26 +12,6 @@ var bottomOffset = -200;
 var xAxis = 0;
 
 const Background = () => {
-  {/*}
-
-  https://www.youtube.com/watch?v=wVK3HHbli7g // video of background
-
-
-  const [axis, setAxis] = useState([{}])
-
-
-  useEffect(() => {
-    fetch("/members").then( //fetching members rout from backend
-      res => res.json() // turn into json
-    ).then(
-      axis => {
-        setAxis(axis) // set data to res using setData 
-        console.log(axis)
-      }
-    )
-  }, [])
-*/}
-
   const imgRef = useRef();
   const canvasRef = useRef();
 
@@ -49,8 +29,6 @@ const Background = () => {
     const detections = await faceapi.detectAllFaces(
       imgRef.current,
       new faceapi.TinyFaceDetectorOptions())
-      //.withFaceLandmarks()
-      //.withFaceDescriptors();
 
       console.log("detections: ", detections)
       if(detections[0]){
@@ -88,14 +66,6 @@ const Background = () => {
 
 return (
   <div>
-    {/*}
-    {(typeof axis.members === 'undefined') ? ( // if data.members is undefined then show loading message 
-          <h1>Loading...</h1> 
-        ) : (
-          axis.members.map((member, index) => ( // if data.members is defined then map through data.members and show each member
-            <p key={index}>{member}</p>
-        ))
-      )} */}
     <img
       ref = {imgRef}
       src="http://localhost:4999/video_feed"
