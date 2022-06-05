@@ -5,25 +5,9 @@ from flask_cors import CORS
 
 app = Flask(__name__, template_folder='../../frontend/src')
 CORS(app)
-#axis = []
-#axisGen = [1,2]
+
 def index():
     return render_template('index.html')
-#  
-#def axis(camera):
-#    while True:
-#        axisGen = camera.get_axis()
-#        
-#        yield (axisGen)
-#
-#@app.route('/members')
-#def members():
-#    return Response(axis(VideoCamera()))
-#  
-
-#def setAxis(axisGen):
-#    global axis
-#    axis = axisGen
     
 def gen(camera):
     while True:
@@ -39,9 +23,6 @@ def video_feed():
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame') #explains the type of response the html is receiving and sending it to the browser
 
-#@app.route('/members')
-#def members():
-#    return {"members": axis}
   
 # initialize the server to run the flask app on, debug mode means you do not need to close and reopen the server to see changes
 if __name__ == '__main__':

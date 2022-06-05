@@ -35,6 +35,16 @@ const Background = () => {
   const imgRef = useRef();
   const canvasRef = useRef();
 
+  function handleParallaxTop(event) {
+    document.documentElement.style.setProperty('--top-offset', `${topOffset}px`);
+  }
+  function handleParallaxMiddle(event) {
+    document.documentElement.style.setProperty('--middle-offset', `${middleOffset}px`);
+  }
+  function handleParallaxBottom(event) {
+    document.documentElement.style.setProperty('--bottom-offset', `${bottomOffset}px`);
+  }
+
   const handleImage = async() => {
     const detections = await faceapi.detectAllFaces(
       imgRef.current,
@@ -42,24 +52,40 @@ const Background = () => {
       //.withFaceLandmarks()
       //.withFaceDescriptors();
 
-      console.log(detections)
+      console.log("detections: ", detections)
       if(detections[0]){
         xAxis = detections[0]._box._x
-        console.log(xAxis)
       }
+      console.log("Xaxis: ", xAxis)
   }
 
   useEffect(() => {
-    const loadModels = () => {
-      Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-      ])
-      .then(handleImage)
-      .catch((e) => console.log(e));
-    };
+    const interval = setInterval(() => {
+      const loadModels = () => {
+        Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        ])
+        .then(handleImage)
+        .catch((e) => console.log(e));
+      };
+  
+      imgRef.current && loadModels();
 
-    imgRef.current && loadModels();
+      if(xAxis > 0){
+        topOffset = topOffset + 0.01 * xAxis;
+        middleOffset = middleOffset + 0.05 * xAxis;
+        bottomOffset = bottomOffset + 0.09 * xAxis;
+        handleParallaxTop(topOffset);
+        handleParallaxMiddle(middleOffset);
+        handleParallaxBottom(bottomOffset);
+      }
+      xAxis = 0;
+
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
+
 return (
   <div>
     {/*}
@@ -82,19 +108,16 @@ return (
 
     <div className="image-stack">
       <img 
-        style={{marginLeft: topOffset}}
         className="image-stack__item--top"
         src={mountainTop}
         alt="Mountain Top"
       />
       <img 
-        style={{marginLeft: middleOffset}}
         className="image-stack__item--middle"
         src={mountainMiddle}
         alt="Mountain Middle"
       />
       <img 
-        style={{marginLeft: bottomOffset}}
         className="image-stack__item--bottom"
         src={mountainBackground}
         alt="Mountain background"

@@ -1,3 +1,7 @@
+:root{
+  --parallax-offset: -200px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -29,6 +33,7 @@ p {
   grid-column: 1 / span 8;
   z-index: 2; 
   width: 150vw;
+  margin-left: var(--parallax-offset);
 }
 
 .image-stack__item--middle {
@@ -36,6 +41,7 @@ p {
   grid-column: 1 / span 8;
   z-index: 3; 
   width: 150vw;
+  margin-left: var(--parallax-offset);
 }
 
 .image-stack__item--top {
@@ -43,6 +49,7 @@ p {
   grid-column: 1 / span 8;
   z-index: 4; 
   width: 150vw;
+  margin-left: var(--parallax-offset);
 }
 
 img {
